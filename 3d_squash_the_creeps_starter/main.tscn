@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://2wap0283yk0r"]
+
+[ext_resource type="Script" uid="uid://cc8n3086pvl18" path="res://main.gd" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://ceuu150fmggvr" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://defdm2qdva75q" path="res://mob.tscn" id="2_h2yge"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cr0jn"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cr0jn"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="Curve3D" id="Curve3D_ig7tw"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -13.106008, 0.00012207031, -10.021265, 0, 0, 0, 0, 0, 0, 12.042676, 0.00012207031, -9.925034, 0, 0, 0, 0, 0, 0, 11.99812, 0.00012207031, 10.021856, 0, 0, 0, 0, 0, 0, -13.00815, 0.00012207031, 10.021856),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cr0jn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h5wpd"]
+
+[node name="Main" type="Node" unique_id=1989521405]
+script = ExtResource("1_0xm2m")
+mob_scene = ExtResource("2_h2yge")
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=339366493]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=2051675528]
+shape = SubResource("BoxShape3D_cr0jn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=1746591374]
+mesh = SubResource("BoxMesh_cr0jn")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Ground" unique_id=1235758526]
+transform = Transform3D(0.9661359, -0.11897214, -0.22896942, 0.22646089, -0.034376964, 0.97341335, -0.123680346, -0.9923023, -0.006270273, -9, 20, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." unique_id=1300889504 instance=ExtResource("1_ig7tw")]
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=592948347]
+transform = Transform3D(1, 0, 0, 0, -4.371138e-08, 0.9999999, 0, -0.9999999, -4.371138e-08, 0, 20, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Marker3D" unique_id=347107099]
+transform = Transform3D(1, 0, 0, 0, 1.0000001, -7.1054274e-15, 0, 7.1054274e-15, 1.0000001, 0, 0, 0)
+fov = 50.0
+
+[node name="MobPath" type="Path3D" parent="." unique_id=702886442]
+curve = SubResource("Curve3D_ig7tw")
+
+[node name="MobSpawnLocation" type="PathFollow3D" parent="MobPath" unique_id=1544760488]
+transform = Transform3D(-0.0038265248, 0, -0.9999904, 0, 1, 0, 0.9999904, 0, -0.0038265248, -13.106008, 0.00012207031, -10.021265)
+
+[node name="Cylinder" type="Node3D" parent="." unique_id=1378384428]
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Cylinder" unique_id=56681612]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, -10)
+mesh = SubResource("CylinderMesh_cr0jn")
+surface_material_override/0 = SubResource("StandardMaterial3D_h5wpd")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Cylinder" unique_id=885957059]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 10)
+mesh = SubResource("CylinderMesh_cr0jn")
+surface_material_override/0 = SubResource("StandardMaterial3D_h5wpd")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Cylinder" unique_id=490756557]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 10)
+mesh = SubResource("CylinderMesh_cr0jn")
+surface_material_override/0 = SubResource("StandardMaterial3D_h5wpd")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Cylinder" unique_id=1904250885]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -10)
+mesh = SubResource("CylinderMesh_cr0jn")
+surface_material_override/0 = SubResource("StandardMaterial3D_h5wpd")
+
+[node name="MobTimer" type="Timer" parent="." unique_id=1596808501]
+wait_time = 0.5
+autostart = true
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
