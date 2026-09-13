@@ -1,4 +1,3 @@
 res://main.tscn
-res://score_label.gd
 res://main.gd
-res://player.tscn
+res://music_player.tscn
