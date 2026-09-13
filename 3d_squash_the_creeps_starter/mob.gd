@@ -25,6 +25,8 @@ func initialize(start_pos, player_pos):
 	target_velocity = Vector3.FORWARD * random_speed
 	# Rotate velocity để move theo hướng đang look 
 	target_velocity = target_velocity.rotated(Vector3.UP,rotation.y)
+	
+	$Pivot/Character/AnimationPlayer.speed_scale = random_speed/10.0
 
 func _on_visible_on_screen_notifier_3d_screen_exited() -> void:
 	queue_free()

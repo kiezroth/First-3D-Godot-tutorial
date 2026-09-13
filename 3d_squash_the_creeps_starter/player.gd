@@ -29,6 +29,9 @@ func _physics_process(delta: float) -> void:
 		
 	if direction != Vector3.ZERO:
 		direction = direction.normalized()
+		$Pivot/Character/AnimationPlayer.speed_scale = 1.5
+	else:
+		$Pivot/Character/AnimationPlayer.speed_scale = 1
 		
 	var dirXZ = Vector3(direction.x,0,direction.z)
 	if dirXZ != Vector3.ZERO:

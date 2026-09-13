@@ -45,7 +45,7 @@ mesh = SubResource("BoxMesh_cr0jn")
 skeleton = NodePath("../CollisionShape3D")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Ground" unique_id=1235758526]
-transform = Transform3D(0.9661359, -0.11897214, -0.22896942, 0.22646089, -0.034376964, 0.97341335, -0.123680346, -0.9923023, -0.006270273, -9, 20, 0)
+transform = Transform3D(0.96104634, -0.1559733, 0.22817142, -0.26301646, -0.2624444, 0.92841005, -0.08492483, -0.952258, -0.29324478, 9.835108, 14.071299, -1.6179874)
 shadow_enabled = true
 
 [node name="Player" parent="." unique_id=1300889504 instance=ExtResource("1_ig7tw")]
@@ -54,7 +54,7 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, -4.371138e-08, 0.9999999, 0, -0.9999999, -4.371138e-08, 0, 20, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Marker3D" unique_id=347107099]
-transform = Transform3D(1, 0, 0, 0, 1.0000001, -7.1054274e-15, 0, 7.1054274e-15, 1.0000001, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0)
 fov = 50.0
 
 [node name="MobPath" type="Path3D" parent="." unique_id=702886442]
@@ -64,6 +64,7 @@ curve = SubResource("Curve3D_ig7tw")
 transform = Transform3D(-0.0038265248, 0, -0.9999904, 0, 1, 0, 0.9999904, 0, -0.0038265248, -13.106008, 0.00012207031, -10.021265)
 
 [node name="Cylinder" type="Node3D" parent="." unique_id=1378384428]
+visible = false
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="Cylinder" unique_id=56681612]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, -10)
