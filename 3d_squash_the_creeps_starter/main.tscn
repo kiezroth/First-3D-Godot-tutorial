@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://cc8n3086pvl18" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://ceuu150fmggvr" path="res://player.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://defdm2qdva75q" path="res://mob.tscn" id="2_h2yge"]
+[ext_resource type="FontFile" uid="uid://cyxhh7ddkn62q" path="res://fonts/Montserrat-Medium.ttf" id="4_lquwl"]
+[ext_resource type="Script" uid="uid://bq4lq2wbf1rkc" path="res://score_label.gd" id="5_7mycd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cr0jn"]
 size = Vector3(60, 2, 60)
@@ -21,6 +23,10 @@ point_count = 4
 [sub_resource type="CylinderMesh" id="CylinderMesh_cr0jn"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h5wpd"]
+
+[sub_resource type="Theme" id="Theme_cr0jn"]
+default_font = ExtResource("4_lquwl")
+default_font_size = 22
 
 [node name="Main" type="Node" unique_id=1989521405]
 script = ExtResource("1_0xm2m")
@@ -82,6 +88,23 @@ surface_material_override/0 = SubResource("StandardMaterial3D_h5wpd")
 [node name="MobTimer" type="Timer" parent="." unique_id=1596808501]
 wait_time = 0.5
 autostart = true
+
+[node name="UserInterface" type="Control" parent="." unique_id=1234072311]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_cr0jn")
+
+[node name="ScoreLabel" type="Label" parent="UserInterface" unique_id=658227081]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 101.0
+offset_bottom = 63.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Score: 0"
+script = ExtResource("5_7mycd")
 
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
