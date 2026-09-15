@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bicorb7we351t" path="res://art/mob.glb" id="2_ubaqv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cr0jn"]
-size = Vector3(1.7939101, 0.9886322, 2.5768883)
+size = Vector3(1.7939101, 0.8850632, 2.9647136)
 
 [sub_resource type="Animation" id="Animation_onrkg"]
 length = 0.001
@@ -74,7 +74,7 @@ collision_mask = 0
 script = ExtResource("1_nokgg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=887503825]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.028826177, 0.50305444, 0.16665599)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.028826177, 0.45126992, 0.3605686)
 shape = SubResource("BoxShape3D_cr0jn")
 
 [node name="Pivot" type="Node3D" parent="." unique_id=74383817]
