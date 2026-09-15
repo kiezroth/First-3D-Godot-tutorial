@@ -5,4 +5,4 @@
 [node name="Music" type="AudioStreamPlayer" unique_id=748103377]
 stream = ExtResource("1_fvyft")
 volume_db = -20.0
-autoplay = true
+bus = &"Music"

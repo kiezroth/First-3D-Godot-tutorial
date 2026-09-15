@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://defdm2qdva75q" path="res://mob.tscn" id="2_h2yge"]
 [ext_resource type="FontFile" uid="uid://cyxhh7ddkn62q" path="res://fonts/Montserrat-Medium.ttf" id="4_lquwl"]
 [ext_resource type="Script" uid="uid://bq4lq2wbf1rkc" path="res://score_label.gd" id="5_7mycd"]
+[ext_resource type="AudioStream" uid="uid://b0njheakh50e3" path="res://gameover.wav" id="6_7mycd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cr0jn"]
 size = Vector3(60, 2, 60)
@@ -31,6 +32,7 @@ default_font_size = 22
 [node name="Main" type="Node" unique_id=1989521405]
 script = ExtResource("1_0xm2m")
 mob_scene = ExtResource("2_h2yge")
+mob_speed_difficult_increasing_per_level = 1.5
 
 [node name="Ground" type="StaticBody3D" parent="." unique_id=339366493]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -87,8 +89,6 @@ mesh = SubResource("CylinderMesh_cr0jn")
 surface_material_override/0 = SubResource("StandardMaterial3D_h5wpd")
 
 [node name="MobTimer" type="Timer" parent="." unique_id=1596808501]
-wait_time = 0.5
-autostart = true
 
 [node name="UserInterface" type="Control" parent="." unique_id=1234072311]
 layout_mode = 3
@@ -103,11 +103,20 @@ theme = SubResource("Theme_cr0jn")
 layout_mode = 0
 offset_left = 40.0
 offset_top = 40.0
-offset_right = 101.0
-offset_bottom = 63.0
+offset_right = 128.0
+offset_bottom = 68.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Score: 0"
 script = ExtResource("5_7mycd")
+Difficult_based_on_score = null
+
+[node name="LevelLabel" type="Label" parent="UserInterface/ScoreLabel" unique_id=735934476]
+layout_mode = 0
+offset_left = 570.0
+offset_right = 647.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Level: 1"
 
 [node name="Retry" type="ColorRect" parent="UserInterface" unique_id=1154818346]
 layout_mode = 1
@@ -118,22 +127,61 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.3137255)
 
-[node name="RetryLabel" type="Label" parent="UserInterface/Retry" unique_id=576343871]
+[node name="Message" type="Label" parent="UserInterface/Retry" unique_id=576343871]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -246.0
-offset_top = -18.5
-offset_right = 246.0
-offset_bottom = 18.5
+offset_left = -250.0
+offset_top = -86.5
+offset_right = 250.0
+offset_bottom = 46.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 29
-text = "Pressing enter to retry..."
+theme_override_font_sizes/font_size = 52
+text = "Squash the Creeps"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 uppercase = true
+
+[node name="Button" type="Button" parent="UserInterface/Retry" unique_id=828718066]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -68.5
+offset_top = -113.0
+offset_right = 68.5
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_lquwl")
+theme_override_font_sizes/font_size = 52
+text = "Start"
+
+[node name="StartTimer" type="Timer" parent="." unique_id=452252848]
+wait_time = 2.0
+one_shot = true
+
+[node name="GameOverTimer" type="Timer" parent="." unique_id=2029202789]
+wait_time = 2.0
+one_shot = true
+
+[node name="GameOverAudio" type="AudioStreamPlayer" parent="." unique_id=1405546125]
+stream = ExtResource("6_7mycd")
+volume_db = -15.0
+
+[node name="PlayerSpawnLocation" type="Marker3D" parent="." unique_id=399627912]
 
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="DifficultIncreasing" from="UserInterface/ScoreLabel" to="." method="_on_score_label_difficult_increasing"]
+[connection signal="pressed" from="UserInterface/Retry/Button" to="." method="_on_button_pressed"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="timeout" from="GameOverTimer" to="." method="_on_game_over_timer_timeout"]

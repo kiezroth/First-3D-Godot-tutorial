@@ -2,7 +2,7 @@ extends CharacterBody3D
 # Minimum speed of the mob in meters per second.
 @export var min_speed = 10
 # Maximum speed of the mob in meters per second.
-@export var max_speed = 18
+@export var max_speed = 14
 
 var target_velocity = Vector3.ZERO
 
@@ -14,15 +14,15 @@ func _physics_process(_delta):
 		velocity = target_velocity
 	move_and_slide()
 	
-func initialize(start_pos, player_pos):
+func initialize(start_pos, player_pos, speed_mod):
 	# Rotate hướng trực tiếp vào player
 	player_pos.y = 0
 	look_at_from_position(start_pos,player_pos,Vector3.UP)
 	# Random angle deg -45 to 45 để không hướng trực tiếp vào player
 	rotate_y(randf_range(-PI/4,PI/4))
 	
-	var random_speed = randi_range(min_speed,max_speed)
-	target_velocity = Vector3.FORWARD * random_speed
+	var random_speed = randi_range(min_speed + speed_mod / 2, max_speed + speed_mod)
+	target_velocity = Vector3.FORWARD * (random_speed)
 	# Rotate velocity để move theo hướng đang look 
 	target_velocity = target_velocity.rotated(Vector3.UP,rotation.y)
 	

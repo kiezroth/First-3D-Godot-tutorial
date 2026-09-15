@@ -63,8 +63,13 @@ func _physics_process(delta: float) -> void:
 				#1 frame tối đa hit đc 1 con
 				break
 
+func start(pos):
+	position = pos
+	show()
+	$CollisionShape3D.set_deferred("disabled",false)
 
 func _on_mob_detector_body_entered(_body: Node3D) -> void:
-	hit.emit()
 	#Player die
-	queue_free()
+	hit.emit()
+	hide()
+	$CollisionShape3D.set_deferred("disabled",true)
